@@ -1,7 +1,37 @@
+# ---
+# - hosts: localhost
+#   tasks:
+#   - name: "Install kubernetes python package"
+#     pip:
+#       name: kubernetes
+#       state: present
+
+
 ---
-- hosts: localhost
+- name: Deploy Jenkins to Kubernetes
+  hosts: localhost
   tasks:
-  - name: "Install kubernetes python package"
-    pip:
-      name: kubernetes
-      state: present
+    - name: Apply Jenkins namespace
+      kubernetes.core.k8s:
+        state: present
+        src: jenkins-namespace.yaml
+
+    - name: Apply Jenkins PVC
+      kubernetes.core.k8s:
+        state: present
+        src: jenkins-pv.yaml
+
+    - name: Deploy Jenkins
+      kubernetes.core.k8s:
+        state: present
+        src: jenkins-deployment.yaml
+
+    - name: Expose Jenkins Service
+      kubernetes.core.k8s:
+        state: present
+        src: jenkins-service.yaml
+
+    - name: Apply Jenkins Ingress with Ngrok
+      kubernetes.core.k8s:
+        state: present
+        src: jenkins-ingress.yaml
