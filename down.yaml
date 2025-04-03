@@ -1,7 +1,28 @@
 ---
-- hosts: localhost
+- name: Remove Jenkins from Kubernetes
+  hosts: localhost
   tasks:
-  - name: "remove kubernetes python package"
-    pip:
-      name: kubernetes
-      state: absent
+    - name: Delete Jenkins Ingress
+      kubernetes.core.k8s:
+        state: absent
+        src: jenkins-ingress.yaml
+
+    - name: Delete Jenkins Service
+      kubernetes.core.k8s:
+        state: absent
+        src: jenkins-service.yaml
+
+    - name: Delete Jenkins Deployment
+      kubernetes.core.k8s:
+        state: absent
+        src: jenkins-deployment.yaml
+
+    - name: Delete PVC
+      kubernetes.core.k8s:
+        state: absent
+        src: jenkins-pv.yaml
+
+    - name: Delete Namespace
+      kubernetes.core.k8s:
+        state: absent
+        src: jenkins-namespace.yaml
