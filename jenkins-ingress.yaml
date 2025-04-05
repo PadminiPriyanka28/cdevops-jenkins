@@ -7,13 +7,13 @@ metadata:
     kubernetes.io/ingress.class: "ngrok"
 spec:
   rules:
-  - host: jenkins.example.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: jenkins-service
-            port:
-              number: 8080
+    - host: "835a-172-203-190-244.ngrok-free.app.ngrok.io"  # Your new Ngrok URL here
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jenkins-service
+                port:
+                  number: 8080
